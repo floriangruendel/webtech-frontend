@@ -1,9 +1,9 @@
 <template>
 <h1>Welcome to Show</h1>
   <ul class="list-group list-group-flush">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="row row-cols-1 row-cols-md-1 g-1">
       <div class="col" v-for="levy in levies" :key="levy.id">
-        <li class="list-group-item">{{ leviy.title }}</li>
+        <li class="list-group-item">{{ levy.title }}</li>
       </div>
     </div>
   </ul>
@@ -17,7 +17,7 @@ export default {
       levies: [
         {
           id: 1,
-          title: 'Abgabe 11',
+          title: 'Abgabe 1',
           discription: 'Das ist der 1. Test',
           modul: 'webtech',
           deadline: '25-04-1022',
