@@ -18,12 +18,13 @@ export default {
     }
   },
   mounted () {
+    const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
     const requestOptions = {
       method: 'GET',
       redirect: 'follow'
     }
 
-    fetch('https://webtech-uniabgaben.herokuapp.com/api/v1/levies', requestOptions)
+    fetch(endpoint, requestOptions)
       .then(response => response.json())
       .then(result => result.forEach(levy => {
         this.levies.push(levy)
