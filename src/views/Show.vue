@@ -14,49 +14,21 @@ export default {
   name: 'Show',
   data () {
     return {
-      levies: [
-        {
-          id: 1,
-          title: 'Abgabe 1',
-          discription: 'Das ist der 1. Test',
-          modul: 'webtech',
-          deadline: '25-04-1022',
-          importance: 'wichtig'
-        },
-        {
-          id: 2,
-          title: 'Abgabe 2',
-          discription: 'Das ist der 2. Test',
-          modul: 'webtech',
-          deadline: '25-04-1022',
-          importance: 'wichtig'
-        },
-        {
-          id: 3,
-          title: 'Abgabe 3',
-          discription: 'Das ist der 3. Test',
-          modul: 'webtech',
-          deadline: '25-04-1022',
-          importance: 'wichtig'
-        },
-        {
-          id: 4,
-          title: 'Abgabe 4',
-          discription: 'Das ist der 4. Test',
-          modul: 'webtech',
-          deadline: '25-04-1022',
-          importance: 'wichtig'
-        },
-        {
-          id: 5,
-          title: 'Abgabe 5',
-          discription: 'Das ist der 5. Test',
-          modul: 'webtech',
-          deadline: '25-04-1022',
-          importance: 'wichtig'
-        }
-      ]
+      levies: []
     }
+  },
+  mounted () {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    }
+
+    fetch('https://webtech-uniabgaben.herokuapp.com/api/v1/levies', requestOptions)
+      .then(response => response.json())
+      .then(result => result.forEach(levy => {
+        this.levies.push(levy)
+      }))
+      .catch(error => console.log('error', error))
   }
 }
 </script>
