@@ -40,8 +40,8 @@ export default {
     }
   },
   mounted () {
-    const endpoint = 'http://localhost:8080/api/v1/levies'
-    //   const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
+    // const endpoint = 'http://localhost:8080/api/v1/levies'
+    const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
     const requestOptions = {
       method: 'GET',
       redirect: 'follow'
