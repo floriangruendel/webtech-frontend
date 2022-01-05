@@ -11,9 +11,9 @@
           </div>
           <p style="font-size:18px" class="mb-1" align="left">{{ levy.discription }}</p>
           <p style="font-size:13px" class="mb-1" align="left">{{ levy.modul }}</p>
-          <button type="button" class="btn btn-outline-secondary">Bearbeiten</button>
+          <button type="button" class="btn btn-outline-secondary">Edit</button>
           <i>&nbsp;</i>
-          <button type="button" class="btn btn-outline-danger">Löschen</button>
+          <button type="button" class="btn btn-outline-danger">Delete</button>
         </a>
       </div>
     </div>
