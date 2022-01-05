@@ -8,15 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <router-link class = "nav-link" to="/">Home</router-link>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        TODO
-                      </a>
-                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <router-link class = "dropdown-item" to="/show">Show</router-link>
-                        <router-link class = "dropdown-item" to="/add">Add</router-link>
-                      </ul>
-                    </li>
+          <router-link class = "nav-link" to="/show">TODO</router-link>
           <router-link class = "nav-link" to="/about">About</router-link>
         </ul>
       </div>
