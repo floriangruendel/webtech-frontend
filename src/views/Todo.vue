@@ -31,14 +31,26 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <form class="test-start">
-        <input class="form-control" type="text" placeholder="Title" aria-label="default input example" v-model="title">
+      <form class="test-start needs-validation" novalidate>
+        <input class="form-control" type="text" placeholder="Title" aria-label="default input example" v-model="title" required>
+        <div class="invalid-feedback" align="left">
+          Please provide a title.
+        </div>
         <br>
-        <input class="form-control" type="text" placeholder="Discription" aria-label="default input example" v-model="discription">
+        <input class="form-control" type="text" placeholder="Discription" aria-label="default input example" v-model="discription" required>
+        <div class="invalid-feedback" align="left">
+          Please provide a discription.
+        </div>
         <br>
-        <input class="form-control" type="text" placeholder="Modul" aria-label="default input example" v-model="modul">
+        <input class="form-control" type="text" placeholder="Modul" aria-label="default input example" v-model="modul" required>
+        <div class="invalid-feedback" align="left">
+          Please provide a modul.
+        </div>
         <br>
-        <input class="form-control" type="text" placeholder="Deadline (yyyy-mm-dd)" aria-label="default input example" v-model="deadline">
+        <input class="form-control" type="text" placeholder="Deadline (yyyy-mm-dd)" aria-label="default input example" v-model="deadline" required>
+        <div class="invalid-feedback" align="left">
+          Please provide a deadline.
+        </div>
         <br>
         <button class="btn btn-outline-success me-3" type="submit" @click="createLevy">Create</button>
       </form>
@@ -61,28 +73,51 @@ export default {
   },
   methods: {
     createLevy () {
-      const headers = new Headers()
-      headers.append('Content-Type', 'application/json')
+      const valid = this.validate()
+      if (valid) {
+        const headers = new Headers()
+        headers.append('Content-Type', 'application/json')
 
-      const payload = JSON.stringify({
-        title: this.title,
-        discription: this.discription,
-        modul: this.modul,
-        deadline: this.deadline,
-        importance: 'normal'
-      })
+        const payload = JSON.stringify({
+          title: this.title,
+          discription: this.discription,
+          modul: this.modul,
+          deadline: this.deadline,
+          importance: 'normal'
+        })
 
-      //  const endpoint = 'http://localhost:8080/api/v1/levies'
-      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
-      const requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: payload,
-        redirect: 'follow'
+        //  const endpoint = 'http://localhost:8080/api/v1/levies'
+        const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
+        const requestOptions = {
+          method: 'POST',
+          headers: headers,
+          body: payload,
+          redirect: 'follow'
+        }
+
+        fetch(endpoint, requestOptions)
+          .catch(error => console.log('error', error))
       }
+    },
+    validate () {
+      let valid = true
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
 
-      fetch(endpoint, requestOptions)
-        .catch(error => console.log('error', error))
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              valid = false
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+      return valid
     }
   },
   mounted () {
