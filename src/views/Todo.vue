@@ -13,7 +13,7 @@
           <p style="font-size:13px" class="mb-1" align="left">{{ levy.modul }}</p>
           <button type="button" class="btn btn-outline-secondary">Edit</button>
           <i>&nbsp;</i>
-          <button type="button" class="btn btn-outline-danger">Delete</button>
+          <button type="button" class="btn btn-outline-danger" @click="deleteLevy(levy.id)">Delete</button>
         </a>
       </div>
     </div>
@@ -77,7 +77,6 @@ export default {
       if (valid) {
         const headers = new Headers()
         headers.append('Content-Type', 'application/json')
-
         const payload = JSON.stringify({
           title: this.title,
           discription: this.discription,
@@ -85,8 +84,7 @@ export default {
           deadline: this.deadline,
           importance: 'normal'
         })
-
-        //  const endpoint = 'http://localhost:8080/api/v1/levies'
+        //   const endpoint = 'http://localhost:8080/api/v1/levies'
         const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
         const requestOptions = {
           method: 'POST',
@@ -94,16 +92,27 @@ export default {
           body: payload,
           redirect: 'follow'
         }
-
         fetch(endpoint, requestOptions)
           .catch(error => console.log('error', error))
       }
+    },
+    deleteLevy (id) {
+      //  const endpoint = 'http://localhost:8080/api/v1/levies/' + id
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies/' + id
+      const requestOptions = {
+        method: 'DELETE',
+        redirect: 'follow'
+      }
+
+      fetch(endpoint, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error))
     },
     validate () {
       let valid = true
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.querySelectorAll('.needs-validation')
-
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
         .forEach(function (form) {
@@ -113,7 +122,6 @@ export default {
               event.preventDefault()
               event.stopPropagation()
             }
-
             form.classList.add('was-validated')
           }, false)
         })
@@ -127,7 +135,6 @@ export default {
       method: 'GET',
       redirect: 'follow'
     }
-
     fetch(endpoint, requestOptions)
       .then(response => response.json())
       .then(result => result.forEach(levy => {
