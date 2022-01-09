@@ -118,8 +118,8 @@ export default {
           deadline: this.deadline,
           importance: 'normal'
         })
-        const endpoint = 'http://localhost:8080/api/v1/levies'
-        //  const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
+        //  const endpoint = 'http://localhost:8080/api/v1/levies'
+        const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
         const requestOptions = {
           method: 'POST',
           headers: headers,
@@ -131,8 +131,8 @@ export default {
       }
     },
     deleteLevy (id) {
-      const endpoint = 'http://localhost:8080/api/v1/levies/' + id
-      //  const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies/' + id
+      //  const endpoint = 'http://localhost:8080/api/v1/levies/' + id
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies/' + id
       const requestOptions = {
         method: 'DELETE',
         redirect: 'follow'
@@ -157,8 +157,8 @@ export default {
         importance: 'normal'
       })
 
-      const endpoint = 'http://localhost:8080/api/v1/levies/' + id
-      //  const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies/' + id
+      //  const endpoint = 'http://localhost:8080/api/v1/levies/' + id
+      const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies/' + id
       const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
@@ -190,12 +190,23 @@ export default {
       return valid
     },
     sortedLevies () {
-      return this.levies.sort((a, b) => a.id - b.id)
+      return this.levies.sort(function (a, b) {
+        const splitA = (a.deadline + '').split('-')
+        const splitB = (b.deadline + '').split('-')
+        if (parseInt(splitA[0], 10) > (parseInt(splitB[0], 10))) { return 1 }
+        if (parseInt(splitA[0], 10) < (parseInt(splitB[0], 10))) { return -1 } else {
+          if (parseInt(splitA[1], 2) > (parseInt(splitB[1], 2))) { return 1 }
+          if (parseInt(splitA[1], 2) < (parseInt(splitB[1], 2))) { return -1 } else {
+            if (parseInt(splitA[2], 2) > (parseInt(splitB[2], 2))) { return 1 }
+            if (parseInt(splitA[2], 2) < (parseInt(splitB[2], 2))) { return -1 } else { return 0 }
+          }
+        }
+      })
     }
   },
   mounted () {
-    const endpoint = 'http://localhost:8080/api/v1/levies'
-    //  const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
+    //  const endpoint = 'http://localhost:8080/api/v1/levies'
+    const endpoint = process.env.VUE_APP_BACKEND_BASE_URL + '/api/v1/levies'
     const requestOptions = {
       method: 'GET',
       redirect: 'follow'
@@ -206,11 +217,6 @@ export default {
         this.levies.push(levy)
       }))
       .catch(error => console.log('error', error))
-    this.levies.sort(function (a, b) {
-      if (a.id < b.id) { return -1 }
-      if (b.id < a.id) { return 1 }
-      return 0
-    })
   }
 }
 </script>
