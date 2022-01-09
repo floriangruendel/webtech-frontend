@@ -2,7 +2,7 @@
 <h1>Your TODOs</h1>
   <ul class="list-group">
     <div class="row row-cols-1 row-cols-md-1 g-1">
-      <div class="col" v-for="levy in levies" :key="levy.id">
+      <div class="col" v-for="levy in sortedLevies()" :key="levy.id">
         <a href="#" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
             <h2 class="mb-1">{{ levy.id }} {{ levy.title }}</h2>
@@ -189,11 +189,8 @@ export default {
         })
       return valid
     },
-    sortLevies () {
-      this.levies.sort(function (a, b) {
-        return b.id - a.id
-      })
-      return this.levies
+    sortedLevies () {
+      return this.levies.sort((a, b) => a.id - b.id)
     }
   },
   mounted () {
