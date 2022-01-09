@@ -5,7 +5,7 @@
       <div class="col" v-for="levy in sortedLevies()" :key="levy.id">
         <a href="#" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
-            <h2 class="mb-1">{{ levy.id }} {{ levy.title }}</h2>
+            <h2 class="mb-1">{{ levy.title }}</h2>
             <small>{{ levy.deadline }}</small>
           </div>
           <p style="font-size:18px" class="mb-1" align="left">{{ levy.discription }}</p>
