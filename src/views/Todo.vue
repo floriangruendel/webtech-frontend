@@ -1,5 +1,5 @@
 <template>
-<h1>Your TODOs</h1>
+<h1>Your TODOshih</h1>
   <ul class="list-group">
     <div class="row row-cols-1 row-cols-md-1 g-1">
       <div class="col" v-for="levy in sortedLevies()" :key="levy.id">
@@ -193,12 +193,12 @@ export default {
       return this.levies.sort(function (a, b) {
         const splitA = (a.deadline + '').split('-')
         const splitB = (b.deadline + '').split('-')
-        if (parseInt(splitA[0], 10) > (parseInt(splitB[0], 10))) { return 1 }
-        if (parseInt(splitA[0], 10) < (parseInt(splitB[0], 10))) { return -1 } else {
-          if (parseInt(splitA[1], 2) > (parseInt(splitB[1], 2))) { return 1 }
-          if (parseInt(splitA[1], 2) < (parseInt(splitB[1], 2))) { return -1 } else {
-            if (parseInt(splitA[2], 2) > (parseInt(splitB[2], 2))) { return 1 }
-            if (parseInt(splitA[2], 2) < (parseInt(splitB[2], 2))) { return -1 } else { return 0 }
+        if (splitA[0] > splitB[0]) { return 1 }
+        if (splitA[0] < splitB[0]) { return -1 } else {
+          if (splitA[1] > splitB[1]) { return 1 }
+          if (splitA[1] < splitB[1]) { return -1 } else {
+            if (splitA[2] > splitB[2]) { return 1 }
+            if (splitA[2] < splitB[2]) { return -1 } else { return 0 }
           }
         }
       })
