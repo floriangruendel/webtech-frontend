@@ -1,5 +1,5 @@
 <template>
-<h1>Your TODOshih</h1>
+<h1>Your TODOs</h1>
   <ul class="list-group">
     <div class="row row-cols-1 row-cols-md-1 g-1">
       <div class="col" v-for="levy in sortedLevies()" :key="levy.id">
