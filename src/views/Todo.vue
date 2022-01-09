@@ -1,17 +1,16 @@
 <template>
 <h1>Your TODOs</h1>
-
   <ul class="list-group">
     <div class="row row-cols-1 row-cols-md-1 g-1">
       <div class="col" v-for="levy in levies" :key="levy.id">
         <a href="#" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
-            <h2 class="mb-1">{{ levy.title }}</h2>
+            <h2 class="mb-1">{{ levy.id }} {{ levy.title }}</h2>
             <small>{{ levy.deadline }}</small>
           </div>
           <p style="font-size:18px" class="mb-1" align="left">{{ levy.discription }}</p>
           <p style="font-size:13px" class="mb-1" align="left">{{ levy.modul }}</p>
-          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2">Edit</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight2" aria-controls="offcanvasRight2" @click="safeId(levy.id)">Edit</button>
           <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight2" aria-labelledby="offcanvasRight2Label">
             <div class="offcanvas-header">
               <h5 id="offcanvasRight2Label">Edit TODO</h5>
@@ -39,7 +38,7 @@
                   Please provide a deadline.
                 </div>
                 <br>
-                <button class="btn btn-outline-success me-3" type="submit" @click="updateLevy(levy.id)">Confirm</button>
+                <button class="btn btn-outline-success me-3" type="submit" @click="updateLevy(this.id)">Confirm</button>
               </form>
             </div>
           </div>
@@ -99,10 +98,14 @@ export default {
       title: '',
       discription: '',
       modul: '',
-      deadline: ''
+      deadline: '',
+      id: 0
     }
   },
   methods: {
+    safeId (id) {
+      this.id = id
+    },
     createLevy () {
       const valid = this.validate()
       if (valid) {
@@ -139,6 +142,8 @@ export default {
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error))
+
+      window.location.reload()
     },
     updateLevy (id) {
       const myHeaders = new Headers()
@@ -183,6 +188,12 @@ export default {
           }, false)
         })
       return valid
+    },
+    sortLevies () {
+      this.levies.sort(function (a, b) {
+        return b.id - a.id
+      })
+      return this.levies
     }
   },
   mounted () {
@@ -198,6 +209,11 @@ export default {
         this.levies.push(levy)
       }))
       .catch(error => console.log('error', error))
+    this.levies.sort(function (a, b) {
+      if (a.id < b.id) { return -1 }
+      if (b.id < a.id) { return 1 }
+      return 0
+    })
   }
 }
 </script>
